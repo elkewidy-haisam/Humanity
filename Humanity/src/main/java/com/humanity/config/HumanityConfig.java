@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.humanity.model.Cart;
@@ -22,9 +23,10 @@ import com.humanity.model.OrderHistory;
 import com.humanity.model.Preview;
 import com.humanity.model.User;
 
+@WebAppConfiguration
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"com.humanity.dao"})
+@ComponentScan({"com.humanity"})
 public class HumanityConfig {
 	
 	

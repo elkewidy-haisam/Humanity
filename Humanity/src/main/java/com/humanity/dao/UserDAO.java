@@ -33,8 +33,8 @@ public class UserDAO {
 	public void login(String username, String password) {
 		// TODO Auto-generated method stub
 		
-		String hql = "from User WHERE username =:" + username + " AND password =:" + password;
-		User user = (User) sessionFactory.getCurrentSession().createQuery(hql);
+		String hql = "from User WHERE username =:user AND password =:pass";
+		User user = (User) sessionFactory.getCurrentSession().createQuery(hql).setParameter("user", username).setParameter("pass", password).uniqueResult();
 		
 		if (user.getUsername() == username && user.getPassword() == password) {
 			

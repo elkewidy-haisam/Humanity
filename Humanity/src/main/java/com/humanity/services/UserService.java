@@ -3,6 +3,7 @@ package com.humanity.services;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,6 +18,7 @@ public class UserService {
 	public static final Logger log = Logger.getLogger(UserService.class);
 	private UserDAO userDAO;
 	
+	@Autowired
 	public void setUserDAO(UserDAO userDAO) {
 		
 		this.userDAO = userDAO;
