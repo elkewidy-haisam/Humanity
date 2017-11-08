@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
