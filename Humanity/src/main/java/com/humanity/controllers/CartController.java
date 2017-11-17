@@ -58,7 +58,7 @@ public class CartController {
 	public ResponseEntity<Void> retrieveShoppingCart(@Valid @RequestBody User user) {
 		
 		cartService.retrieveShoppingCart(user);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
 	

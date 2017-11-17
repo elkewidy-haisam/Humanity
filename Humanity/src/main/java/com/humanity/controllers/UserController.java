@@ -41,7 +41,7 @@ public class UserController {
 		
 	}
 
-	@RequestMapping(value="/farewell", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/farewell", method=RequestMethod.DELETE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public ResponseEntity<Void> closeAccount(@Valid @RequestBody User user) {
 		// TODO Auto-generated method stub
