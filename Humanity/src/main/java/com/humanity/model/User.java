@@ -47,6 +47,12 @@ public class User {
 		this.orderHistory = orderHistory;
 	}
 
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
 	public String getUsername() {
 		return username;
 	}

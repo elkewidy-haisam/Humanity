@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.humanity.config.HumanityConfig;
 import com.humanity.dao.UserDAO;
+import com.humanity.model.User;
 
 import io.restassured.http.ContentType;
 
@@ -22,16 +26,19 @@ public class UserAPITest {
 	
 private static final Logger log = Logger.getLogger(OrderHistoryAPITest.class);
 	
-	private String baseUrl = "http://localhost:4200/humanity";
+	private String baseUrl = "http://localhost:8080/Humanity";
 	private String login = "/login";
 	private String closeAccount = "/farewell";
 	
 	
 	private UserDAO userDAO;
 	
+	@Autowired
+	HumanityConfig humanConfig;
+	
 	
 	@Autowired
-	public void setOrderHistoryDAO(UserDAO userDAO) {
+	public void setUserDAO(UserDAO userDAO) {
 		
 		this.userDAO = userDAO;
 		
@@ -41,7 +48,9 @@ private static final Logger log = Logger.getLogger(OrderHistoryAPITest.class);
 	public void loginTest() {
 		
 		log.info("TESTING login");
-		given().contentType(ContentType.JSON).when().get(baseUrl + login).then().assertThat().statusCode(302);
+		String username = "username3";
+		String password = "password3";
+		given().contentType("application/json").param(username).param(password).when().get(baseUrl + login).then().assertThat().statusCode(302);
 		
 	}
 	
@@ -49,7 +58,12 @@ private static final Logger log = Logger.getLogger(OrderHistoryAPITest.class);
 	public void closeAccount() {
 		
 		log.info("TESTING closeAccount");
-		given().contentType(ContentType.JSON).when().delete(baseUrl + closeAccount).then().assertThat().statusCode(410);
+		
+		User user = humanConfig.user();
+		user.setUsername("username3");
+		user.setPassword("password3");
+		
+		given().contentType("application/json").request().body(user).when().delete(baseUrl + closeAccount).then().assertThat().statusCode(410);
 		
 	}
 

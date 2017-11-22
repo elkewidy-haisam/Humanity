@@ -1,8 +1,9 @@
 package com.humanity.config;
 
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-
+@WebAppConfiguration
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	
 	@Override

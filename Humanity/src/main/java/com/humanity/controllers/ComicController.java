@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class ComicController {
 	private static final Logger log = Logger.getLogger(CartController.class);
 	private ComicService comicService;
 	
+	@Autowired
 	public void setComicService(ComicService comicService) {
 		
 		this.comicService = comicService;
@@ -61,7 +63,7 @@ public class ComicController {
 	}
 	
 	
-	@RequestMapping(value="/findComicByChapter", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/findComicByChapter/{chapter}", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public ResponseEntity<Comic> findComicByChapter(@PathVariable int chapter) {
 		
@@ -70,7 +72,7 @@ public class ComicController {
 	}
 	
 	
-	@RequestMapping(value="/findComicByTitle", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/findComicByTitle/{title}", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public ResponseEntity<Comic> findComicByTitle(@PathVariable String title) {
 		

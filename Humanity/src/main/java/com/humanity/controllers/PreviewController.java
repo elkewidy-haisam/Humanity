@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ public class PreviewController {
 	private static final Logger log = Logger.getLogger(PreviewController.class);
 	private PreviewService previewService;
 	
+	@Autowired
 	public void setPreviewService(PreviewService previewService) {
 		
 		this.previewService = previewService;
@@ -37,7 +39,11 @@ public class PreviewController {
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public ResponseEntity<List<Preview>> getAllPreviews() {
 		
-		return new ResponseEntity<>(previewService.getAllPreviews(), HttpStatus.FOUND);
+		log.info(new ResponseEntity<>(previewService.getAllPreviews(), HttpStatus.FOUND));
+		return new ResponseEntity<>
+		(previewService.getAllPreviews(), 
+				HttpStatus.FOUND);
+		
 		
 	}
 	

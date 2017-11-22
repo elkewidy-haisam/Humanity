@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.humanity.config.HumanityConfig;
 import com.humanity.dao.PreviewDAO;
+import com.humanity.model.Preview;
 
 import io.restassured.http.ContentType;
 @WebAppConfiguration
@@ -21,7 +25,7 @@ public class PreviewAPITest {
 	
 	private static final Logger log = Logger.getLogger(CartAPITest.class);
 	
-	private String baseUrl = "http://localhost:4200/humanity";
+	private String baseUrl = "http://localhost:8080/Humanity";
 	private String getAllPreviews = "/previews";
 	private String getSpecificPreview = "/previews/{chapter}";
 	private String addPreview = "/previews/add";
@@ -37,6 +41,7 @@ public class PreviewAPITest {
 	}
 	
 	@Test
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public void getAllPreviewsTest() {
 		
 		log.info("TESTING getAllPreviews");
@@ -45,32 +50,38 @@ public class PreviewAPITest {
 	}
 	
 	@Test
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public void getSpecificPreviewTest() {
 		
+		Preview preview = new Preview();
+		
+		int chapter = preview.getPreviewChapter();
+		
 		log.info("TESTING getSpecificPreview");
-		given().contentType(ContentType.JSON).when().get(baseUrl + getSpecificPreview).then().assertThat().statusCode(302);
+		given().contentType(ContentType.JSON).body(preview).pathParam("chapter", chapter).when().get(baseUrl + getSpecificPreview).then().assertThat().statusCode(302);
 		
 	}
 	
 	@Test
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public void addPreviewTest() {
 		
 		log.info("TESTING addPreview");
-		given().contentType(ContentType.JSON).when().post(baseUrl + addPreview).then().assertThat().statusCode(201);
+		
+		Preview preview = new Preview();
+		
+		given().contentType(ContentType.JSON).body(preview).when().post(baseUrl + addPreview).then().assertThat().statusCode(201);
 	
 	}
 	
 	@Test
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public void updatePreviewTest() {
 		
 		log.info("TESTING updatePreview");
-		given().contentType(ContentType.JSON).when().put(baseUrl + updatePreview).then().assertThat().statusCode(200);
+		Preview preview = new Preview();
+		given().contentType(ContentType.JSON).body(preview).when().put(baseUrl + updatePreview).then().assertThat().statusCode(200);
 	}
-	
-	
-	
-	
-	
 	
 
 }

@@ -68,7 +68,7 @@ public class HumanityConfig {
 	
 	
 	@Bean
-	public DataSource data() {
+	public DataSource dataOracle() {
 		
 		BasicDataSource da = new BasicDataSource();
 		da.setDriverClassName("oracle.jdbc.OracleDriver");
@@ -79,6 +79,22 @@ public class HumanityConfig {
 		return da;
 		
 	}
+	
+	/*@Bean
+	public DataSource dataPostgreSql() {
+		
+		BasicDataSource da = new BasicDataSource();
+		
+		da.setDriverClassName("org.postgresql.Driver");
+		da.setUrl("jdbc:postgresql://localhost:5432/PubHub");
+		da.setUsername("postgres");
+		da.setPassword("texas123");
+		
+		return da;
+		
+		
+		
+	} */
 	
 	//Hibernate Transaction Manager
 	@Bean
@@ -101,7 +117,22 @@ public class HumanityConfig {
 	
 	//SessionFactory
 	@Bean
-	public AnnotationSessionFactoryBean sessionFactory(DataSource da) {
+	public AnnotationSessionFactoryBean sessionFactoryOracle(DataSource da) {
+		
+		AnnotationSessionFactoryBean sfb = new AnnotationSessionFactoryBean();
+		sfb.setDataSource(da);
+		sfb.setPackagesToScan(new String[] {"com.humanity.model"});
+		Properties props = new Properties();
+		props.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
+		props.setProperty("hibernate.hbm2ddl.auto", "update");
+		props.setProperty("show_sql", "true");
+		sfb.setHibernateProperties(props);
+		
+		return sfb;
+	} 
+	
+	/*@Bean
+	public AnnotationSessionFactoryBean sessionFactoryPostgreSQL(DataSource da) {
 		
 		AnnotationSessionFactoryBean sfb = new AnnotationSessionFactoryBean();
 		sfb.setDataSource(da);
@@ -113,7 +144,7 @@ public class HumanityConfig {
 		sfb.setHibernateProperties(props);
 		
 		return sfb;
-	}
+	} */
 	
 
 }

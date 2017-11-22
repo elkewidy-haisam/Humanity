@@ -3,6 +3,7 @@ package com.humanity.controllers;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class OrderHistoryController {
 	private static final Logger log = Logger.getLogger(CartController.class);
 	private OrderHistoryService orderHistoryService;
 	
+	@Autowired
 	public void setCartService(OrderHistoryService orderHistoryService) {
 		
 		this.orderHistoryService = orderHistoryService;

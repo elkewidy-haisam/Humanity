@@ -29,6 +29,7 @@ public class CartController {
 	private static final Logger log = Logger.getLogger(CartController.class);
 	private CartService cartService;
 	
+	@Autowired
 	public void setCartService(CartService cartService) {
 		
 		this.cartService = cartService;
@@ -64,7 +65,7 @@ public class CartController {
 	
 	@RequestMapping(value="/removeAllFromCart", method=RequestMethod.DELETE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public ResponseEntity<Void> removeAllItemsFromCart(Cart cart) {
+	public ResponseEntity<Void> removeAllItemsFromCart(@Valid @RequestBody Cart cart) {
 		
 		cartService.removeAllItemsFromCart(cart);
 		return new ResponseEntity<>(HttpStatus.GONE);
